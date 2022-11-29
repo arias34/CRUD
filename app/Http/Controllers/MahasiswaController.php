@@ -14,11 +14,11 @@ class MahasiswaController extends Controller
     }
     public function create()
     {
-        return view('mahasiswa.read');
+        return view('mahasiswa.create');
     }
     public function store(Request $request)
     {
-       echo "<pre>";
+       //echo "<pre>";
        $data=$request->all();
        unset($data['_token']);
        $nim=@$request->nim;
@@ -51,12 +51,6 @@ class MahasiswaController extends Controller
         return view('mahasiswa.edit', ['datanya'=>$data]);
     }
     public function read()
-    {
-        $model=new Mahasiswa;
-        $data=$model->all();
-        return view('mahasiswa.read', ['datanya'=>$data]);
-    }
-    public function dashboard()
     {
         $model=new Mahasiswa;
         $data=$model->all();

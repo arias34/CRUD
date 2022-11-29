@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MahasiswaController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -15,9 +17,7 @@ use App\Http\Controllers\MahasiswaController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [AuthenticatedSessionController::class, 'create'])->name('login');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -31,11 +31,11 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
-Route::get('/create', [MahasiswaController::class, 'create']);
-Route::post('store-mahasiswa', [MahasiswaController::class, 'store']);
-Route::get('/read', [MahasiswaController::class, 'read']);
-Route::get('/delete', [MahasiswaController::class, 'delete']);
-Route::get('/edit', [MahasiswaController::class, 'edit']);
+Route::get('/create', [MahasiswaController::class, 'create'])->name('create')->middleware('auth');
+Route::post('store-mahasiswa', [MahasiswaController::class, 'store'])->middleware('auth');
+Route::get('/read', [MahasiswaController::class, 'read'])->name('read')->middleware('auth');
+Route::get('/delete', [MahasiswaController::class, 'delete'])->name('delete')->middleware('auth');
+Route::get('/edit', [MahasiswaController::class, 'edit'])->name('update')->middleware('auth');
 
 
 Route::get('add-blog-post-form', [PostController::class, 'index']);
